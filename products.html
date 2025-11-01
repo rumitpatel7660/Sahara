@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sahara Brass Industries — Products</title>
+
+    <!-- Google Fonts (heading + body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind custom config via CDN
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sbg: '#0c0c0f',
+                        brass: '#b07b2a',
+                        brassLite: '#ffd98a',
+                        neutralGray: '#66676b'
+                    },
+                    fontFamily: {
+                        heading: ['"Playfair Display"', 'serif'],
+                        body: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(180deg, #070708 0%, #0c0c0f 100%);
+            color: #f5f5f5;
+            font-family: Inter, sans-serif;
+        }
+        
+        .metal-gradient {
+            background: linear-gradient(135deg, rgba(176, 123, 42, 0.14), rgba(255, 217, 138, 0.06));
+            border: 1px solid rgba(255, 217, 138, 0.06);
+            backdrop-filter: blur(6px);
+        }
+        
+        .card-glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 14px;
+            box-shadow: 0 6px 30px rgba(2, 2, 2, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.035);
+        }
+        
+        .hero-image {
+            min-height: 80vh;
+            background: linear-gradient(rgba(12, 12, 15, 0.65), rgba(12, 12, 15, 0.6)), url('static/product.png') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+        }
+        
+        @media (min-width: 1024px) {
+            .hero-image {
+                min-height: 90vh;
+            }
+        }
+        
+        .filter-pill {
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            color: #f5f5f5;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-pill.active,
+        .filter-pill:hover {
+            border-color: #b07b2a;
+            color: #000;
+            background: #b07b2a;
+        }
+        
+        .reveal-overlay {
+            background: linear-gradient(180deg, rgba(12, 12, 15, 0), rgba(12, 12, 15, 0.85));
+        }
+    </style>
+    <!-- End of styles -->
+</head>
+
+<body class="antialiased">
+    <!-- NAV -->
+    <div id="navbar-container"></div>
+
+    <!-- HERO -->
+    <section class="hero-image relative overflow-hidden">
+        <div class="px-6 md:px-12 w-full">
+            <div class="max-w-7xl mx-auto">
+                <div class="py-16 lg:py-24">
+                    <div class="text-neutralGray uppercase text-sm mb-2">Our Collection</div>
+                    <h1 class="text-4xl md:text-6xl font-heading leading-tight text-white">Premium Brass Products</h1>
+                    <p class="mt-4 text-white max-w-2xl">Explore our curated range of durable, elegant brass hardware across categories.</p>
+                    <div class="mt-8 flex flex-wrap gap-3" id="filterPills">
+                        <!-- Filters populated by JS (All + categories) -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS Grid -->
+    <section class="px-6 md:px-12 py-14">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl md:text-3xl font-heading text-white">Products</h2>
+                <div class="text-sm text-neutralGray hidden sm:block">Filters are optional · Smooth animations on scroll</div>
+            </div>
+
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cards injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript: animations + interactions -->
+    <script>
+        // GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- Data (match your /static/products folder names and image filenames) ---
+        const categories = [{
+            slug: 'all',
+            name: 'All'
+        }, {
+            slug: 'cat-1',
+            name: 'cat-1'
+        }, {
+            slug: 'cat-2',
+            name: 'cat-2'
+        }, {
+            slug: 'cat-3',
+            name: 'cat-3'
+        }];
+
+        // List every image you want to show with its category folder
+        const products = [{
+            image: 'static/products/cat-1/h1.png',
+            category: 'cat-1'
+        }, {
+            image: 'static/products/cat-1/h2.png',
+            category: 'cat-1'
+        }, {
+            image: 'static/products/cat-1/h3.png',
+            category: 'cat-1'
+        }, {
+            image: 'static/products/cat-2/h4.png',
+            category: 'cat-2'
+        }, {
+            image: 'static/products/cat-2/h5.png',
+            category: 'cat-2'
+        }, {
+            image: 'static/products/cat-2/h6.png',
+            category: 'cat-2'
+        }, {
+            image: 'static/products/cat-3/h7.png',
+            category: 'cat-3'
+        }];
+
+        // --- Render Filters ---
+        const filterPills = document.getElementById('filterPills');
+        let activeFilter = 'all';
+
+        function renderFilters() {
+            if (!filterPills) return;
+            filterPills.innerHTML = '';
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-pill px-4 py-2 rounded-full text-sm';
+                if (cat.slug === activeFilter) btn.classList.add('active');
+                btn.textContent = cat.name;
+                btn.dataset.filter = cat.slug;
+                btn.addEventListener('click', () => {
+                    activeFilter = cat.slug;
+                    renderFilters();
+                    renderProducts();
+                });
+                filterPills.appendChild(btn);
+            });
+        }
+
+        // --- Render Products ---
+        const productsGrid = document.getElementById('productsGrid');
+
+        function productCardTemplate(p) {
+            const fileName = p.image.split('/').pop();
+            return `
+            <div class="product-card card-glass p-5 rounded-2xl transform transition-all will-change-transform" data-category="${p.category}">
+                <div class="relative overflow-hidden rounded-xl">
+                    <img src="${p.image}" alt="${fileName}" class="w-full h-56 object-cover rounded-lg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600180758890-6b0b0d1840a2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3'" />
+                    <div class="reveal-overlay absolute inset-0 translate-y-[60%] opacity-0 pointer-events-none flex items-end">
+                        <div class="w-full p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="text-white font-semibold">${fileName}</div>
+                                <div class="text-brass text-xs font-semibold uppercase">${p.category}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center justify-between">
+                        <div class="font-semibold">${fileName}</div>
+                        <div class="text-xs text-brass uppercase">${p.category}</div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function renderProducts() {
+            if (!productsGrid) return;
+            const items = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
+            productsGrid.innerHTML = items.map(productCardTemplate).join('');
+
+            // Animate on render
+            const cards = productsGrid.querySelectorAll('.product-card');
+            cards.forEach((card, idx) => {
+                gsap.from(card, {
+                    y: 40,
+                    opacity: 0,
+                    duration: 0.6,
+                    delay: idx * 0.08,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 92%'
+                    }
+                });
+
+                // Hover elevate
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        y: -10,
+                        scale: 1.01,
+                        boxShadow: '0 18px 50px rgba(2,2,2,0.6)',
+                        duration: 0.3
+                    });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        y: 0,
+                        scale: 1,
+                        boxShadow: '0 6px 30px rgba(2,2,2,0.6)',
+                        duration: 0.4
+                    });
+                });
+
+                // Parallax tilt + overlay reveal
+                const overlay = card.querySelector('.reveal-overlay');
+                card.addEventListener('mousemove', (ev) => {
+                    const rect = card.getBoundingClientRect();
+                    const px = (ev.clientX - rect.left) / rect.width;
+                    const py = (ev.clientY - rect.top) / rect.height;
+                    const rotY = (px - 0.5) * 10;
+                    const rotX = (0.5 - py) * 8;
+                    gsap.to(card, {
+                        rotateY: rotY,
+                        rotateX: rotX,
+                        transformPerspective: 900,
+                        duration: 0.25,
+                        ease: 'power2.out'
+                    });
+                    if (overlay) {
+                        gsap.to(overlay, {
+                            yPercent: -60,
+                            opacity: 1,
+                            duration: 0.25,
+                            ease: 'power2.out'
+                        });
+                    }
+                });
+                card.addEventListener('mouseout', () => {
+                    gsap.to(card, {
+                        rotateY: 0,
+                        rotateX: 0,
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    });
+                    if (overlay) {
+                        gsap.to(overlay, {
+                            yPercent: 0,
+                            opacity: 0,
+                            duration: 0.35,
+                            ease: 'power2.out'
+                        });
+                    }
+                });
+            });
+
+            // No enquire/details buttons to bind
+        }
+
+
+        // Load navbar and footer
+        async function loadHTML(elementId, file) {
+            try {
+                const response = await fetch(file);
+                const html = await response.text();
+                document.getElementById(elementId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading ${file}:`, error);
+            }
+        }
+
+        // Initialize
+        renderFilters();
+        renderProducts();
+
+        // Load navbar and footer (footer provides the modal used by enquire buttons)
+        loadHTML('navbar-container', 'menubar.html');
+        loadHTML('footer-container', 'footer.html');
+    </script>
+</body>
+
+</html>

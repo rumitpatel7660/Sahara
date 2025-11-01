@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sahara Brass Industries — Contact</title>
+
+    <!-- Google Fonts (heading + body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind custom config via CDN
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sbg: '#0c0c0f',
+                        brass: '#b07b2a',
+                        brassLite: '#ffd98a',
+                        neutralGray: '#66676b'
+                    },
+                    fontFamily: {
+                        heading: ['"Playfair Display"', 'serif'],
+                        body: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(180deg, #070708 0%, #0c0c0f 100%);
+            color: #f5f5f5;
+            font-family: Inter, sans-serif;
+        }
+        
+        .metal-gradient {
+            background: linear-gradient(135deg, rgba(176, 123, 42, 0.14), rgba(255, 217, 138, 0.06));
+            border: 1px solid rgba(255, 217, 138, 0.06);
+            backdrop-filter: blur(6px);
+        }
+        
+        .card-glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 14px;
+            box-shadow: 0 6px 30px rgba(2, 2, 2, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.035);
+        }
+        
+        .hero-image {
+            height: 600px;
+            background: linear-gradient(rgba(12, 12, 15, 0.7), rgba(12, 12, 15, 0.7)), url('static/contact.png') center/cover no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        @media (min-width: 1024px) {
+            .hero-image {
+                height: 700px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-image {
+                height: 450px;
+            }
+        }
+        
+        #navbar-container {
+            position: relative;
+            z-index: 50;
+        }
+        
+        .contact-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(176, 123, 42, 0.2);
+        }
+        
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(176, 123, 42, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .contact-card-icon {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-icon-svg {
+            width: 64px;
+            height: 64px;
+            fill: #b07b2a;
+            transition: transform 0.3s ease, fill 0.3s ease;
+        }
+        
+        .contact-card:hover .contact-icon-svg {
+            transform: scale(1.1);
+            fill: #ffd98a;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- NAV -->
+    <div id="navbar-container"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-image relative flex items-center">
+        <div class="px-6 md:px-12 max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-heading mb-6 text-white">Contact Us</h1>
+            <p class="text-white max-w-2xl mx-auto">
+                Have questions about our products or need assistance with a custom order? Reach out to our team.
+            </p>
+        </div>
+    </section>
+
+    <!-- CONTACT CARDS -->
+    <section class="px-6 md:px-12 py-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-heading mb-4 text-white">Contact Information</h2>
+                <p class="text-neutralGray max-w-2xl mx-auto">
+                    Get in touch with us through any of the following channels
+                </p>
+            </div>
+
+            <!-- Contact Information Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <!-- Location Card -->
+                <div class="contact-card p-8 text-center">
+                    <div class="contact-card-icon mb-6 flex justify-center">
+                        <svg class="contact-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-card-content">
+                        <h3 class="text-xl font-semibold mb-3 text-white">Location</h3>
+                        <p class="text-white text-sm leading-relaxed">
+                            Industrial Area, Surat<br> Gujarat, India<br>
+                            <span class="text-white font-medium">395009</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Phone Card -->
+                <div class="contact-card p-8 text-center">
+                    <div class="contact-card-icon mb-6 flex justify-center">
+                        <svg class="contact-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-card-content">
+                        <h3 class="text-xl font-semibold mb-3 text-white">Phone</h3>
+                        <p class="text-neutralGray text-sm">
+                            <a href="tel:+919876543210" class="text-white font-medium hover:text-brass transition-colors">
+                                +91-9876543210
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Email Card -->
+                <div class="contact-card p-8 text-center">
+                    <div class="contact-card-icon mb-6 flex justify-center">
+                        <svg class="contact-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-card-content">
+                        <h3 class="text-xl font-semibold mb-3 text-white">Email</h3>
+                        <p class="text-neutralGray text-sm leading-relaxed">
+                            <a href="mailto:sales@saharabrass.example" class="text-white font-medium hover:text-brass transition-colors block mb-1">
+                                sales@saharabrass.example
+                            </a>
+                            <a href="mailto:support@saharabrass.example" class="text-white font-medium hover:text-brass transition-colors block">
+                                support@saharabrass.example
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Business Hours Card -->
+                <div class="contact-card p-8 text-center">
+                    <div class="contact-card-icon mb-6 flex justify-center">
+                        <svg class="contact-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-card-content">
+                        <h3 class="text-xl font-semibold mb-3 text-white">Business Hours</h3>
+                        <p class="text-white text-sm leading-relaxed">
+                            <span class="text-white font-medium">Sat - Thu:</span> 8:00 AM - 8:00 PM<br>
+                            <span class="text-white font-medium">Friday:</span> Closed
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Maps Section -->
+            <div class="card-glass p-6 rounded-2xl">
+                <h3 class="text-2xl font-heading mb-6 text-center text-white">Visit Our Showroom</h3>
+                <div class="w-full" style="height: 500px;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5214.622730591099!2d70.0446417330399!3d22.455542471913358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395715775bedf863%3A0xfb5dec1b12980db7!2sSAHARA%20BRASS%20INDUSTRIES!5e0!3m2!1sen!2sin!4v1762010827241!5m2!1sen!2sin"
+                        width="100%" height="100%" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript: animations + interactions -->
+    <script>
+        // GSAP initialisations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Load navbar and footer
+        async function loadHTML(elementId, file) {
+            try {
+                const response = await fetch(file);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const html = await response.text();
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.innerHTML = html;
+                } else {
+                    console.error(`Element with id '${elementId}' not found`);
+                }
+            } catch (error) {
+                console.error(`Error loading ${file}:`, error);
+            }
+        }
+
+        // Load navbar and footer (DOM should be ready since script is at end of body)
+        // Use DOMContentLoaded as fallback in case DOM isn't ready yet
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                loadHTML('navbar-container', 'menubar.html');
+                loadHTML('footer-container', 'footer.html');
+            });
+        } else {
+            // DOM is already ready, load immediately
+            loadHTML('navbar-container', 'menubar.html');
+            loadHTML('footer-container', 'footer.html');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sahara Brass Industries — About</title>
+
+    <!-- Google Fonts (heading + body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind custom config via CDN
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sbg: '#0c0c0f',
+                        brass: '#b07b2a',
+                        brassLite: '#ffd98a',
+                        neutralGray: '#66676b'
+                    },
+                    fontFamily: {
+                        heading: ['"Playfair Display"', 'serif'],
+                        body: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(180deg, #070708 0%, #0c0c0f 100%);
+            color: #f5f5f5;
+            font-family: Inter, sans-serif;
+        }
+        
+        .metal-gradient {
+            background: linear-gradient(135deg, rgba(176, 123, 42, 0.14), rgba(255, 217, 138, 0.06));
+            border: 1px solid rgba(255, 217, 138, 0.06);
+            backdrop-filter: blur(6px);
+        }
+        
+        .card-glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 14px;
+            box-shadow: 0 6px 30px rgba(2, 2, 2, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.035);
+        }
+        
+        .hero-image {
+            height: 600px;
+            background: linear-gradient(rgba(12, 12, 15, 0.7), rgba(12, 12, 15, 0.7)), url('static/about.png') center/cover no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        @media (min-width: 1024px) {
+            .hero-image {
+                height: 700px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-image {
+                height: 450px;
+            }
+        }
+        
+        .connector-line {
+            border-left: 2px dashed rgba(255, 255, 255, 0.15);
+            height: 80px;
+            width: 0;
+            position: absolute;
+            left: 50%;
+            top: 100%;
+        }
+        
+        .wavy-underline {
+            display: block;
+        }
+        
+        .illustration-circle {
+            background: linear-gradient(135deg, rgba(176, 123, 42, 0.2), rgba(255, 217, 138, 0.15));
+            border: 1px solid rgba(255, 217, 138, 0.2);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- NAV -->
+    <div id="navbar-container"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-image relative flex items-center">
+        <div class="px-6 md:px-12 max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-heading mb-6 text-white">About Us</h1>
+        </div>
+    </section>
+
+    <!-- COMPANY OVERVIEW -->
+    <section class="px-6 md:px-12 py-16">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-heading mb-12 text-center">Our Story</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="mb-4 text-neutralGray">
+                        Sahara Brass Industries blends industrial-grade processes with traditional finishing techniques. Our parts are engineered to exacting tolerances and finished for a premium look that lasts decades.
+                    </p>
+                    <p class="mb-4 text-neutralGray">
+                        Founded in 2005, we have been serving the architectural and interior design community with high-quality brass hardware that combines functionality with aesthetic appeal. Our manufacturing facility in Gujarat, India, employs over 150 skilled craftsmen
+                        and engineers.
+                    </p>
+                    <p class="mb-4 text-neutralGray">
+                        We specialize in custom manufacturing, allowing architects and designers to bring their unique visions to life. Our quality control process ensures that every product meets international standards.
+                    </p>
+                </div>
+                <div class="rounded-2xl overflow-hidden card-glass p-2">
+                    <img src="https://images.unsplash.com/photo-1600180758890-6b0b0d1840a2?q=80&w=800&auto=format&fit=crop" alt="Brass Manufacturing Facility" class="w-full h-auto rounded-xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISION, MISSION, VALUES -->
+    <section class="px-6 md:px-12 py-16">
+        <div class="max-w-7xl mx-auto">
+            <!-- Core Values Header -->
+            <div class="text-center mb-12">
+                <div class="text-sm uppercase tracking-wider text-brass mb-3">Sahara Brass Industries</div>
+                <h2 class="text-3xl font-heading mb-4">Core Values</h2>
+                <svg class="wavy-underline mx-auto" width="200" height="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 0 10 Q 25 0, 50 10 T 100 10 T 150 10 T 200 10" stroke="#b07b2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <!-- Vision Section (Illustration Left, Text Right) -->
+            <div class="relative mb-12">
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="relative flex justify-center">
+                        <!-- Circular Illustration for Vision -->
+                        <div class="relative w-48 h-48 md:w-56 md:h-56">
+                            <div class="w-full h-full rounded-full illustration-circle flex items-center justify-center relative">
+                                <!-- SVG Illustration: Lightbulb with Golden Arm -->
+                                <svg viewBox="0 0 200 200" class="w-full h-full">
+                                    <!-- Lightbulb (White) -->
+                                    <circle cx="100" cy="100" r="35" fill="rgba(255,255,255,0.95)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                                    <path d="M 70 100 Q 85 75, 100 70 Q 115 75, 130 100" fill="rgba(255,255,255,0.95)"/>
+                                    <rect x="92" y="100" width="16" height="8" fill="rgba(255,255,255,0.95)"/>
+                                    <rect x="88" y="108" width="24" height="6" fill="rgba(255,255,255,0.95)"/>
+                                    <!-- Golden Arm extending from top-right -->
+                                    <line x1="135" y1="85" x2="165" y2="65" stroke="#b07b2a" stroke-width="5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <!-- Number Badge -->
+                            <div class="absolute -right-2 md:-right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-brass rounded-full flex items-center justify-center shadow-lg border-2 border-sbg">
+                                <span class="text-white text-xl md:text-2xl font-bold">1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="text-xl font-heading mb-4 text-white">Our Vision</h3>
+                        <p class="text-neutralGray leading-relaxed">
+                            To be a leader in the field of Brass Parts by continuously striving for the best quality products and the best customer service while also committing towards social and environmental responsibility.
+                        </p>
+                    </div>
+                </div>
+                <!-- Connector Line -->
+                <div class="hidden md:block connector-line"></div>
+            </div>
+
+            <!-- Mission Section (Text Left, Illustration Right) -->
+            <div class="relative mb-12">
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="text-left md:order-1">
+                        <h3 class="text-xl font-heading mb-4 text-white">Our Mission</h3>
+                        <p class="text-neutralGray leading-relaxed">
+                            To constantly innovate and achieve excellence in quality enhancement by adapting to the latest technology and to be a zero complain company in view of its suppliers and clients.
+                        </p>
+                    </div>
+                    <div class="relative flex justify-center md:order-2">
+                        <!-- Circular Illustration for Mission -->
+                        <div class="relative w-48 h-48 md:w-56 md:h-56">
+                            <div class="w-full h-full rounded-full illustration-circle flex items-center justify-center relative">
+                                <!-- SVG Illustration: Person with Flag -->
+                                <svg viewBox="0 0 200 200" class="w-full h-full">
+                                    <!-- Dark Platform/Ground -->
+                                    <rect x="70" y="170" width="60" height="12" fill="rgba(12,12,15,0.8)" rx="2"/>
+                                    <!-- Person (White) -->
+                                    <circle cx="100" cy="140" r="22" fill="rgba(255,255,255,0.95)"/>
+                                    <rect x="88" y="140" width="24" height="45" fill="rgba(255,255,255,0.95)" rx="3"/>
+                                    <rect x="85" y="145" width="30" height="25" fill="rgba(255,255,255,0.95)" rx="3"/>
+                                    <!-- Flag Pole (Brass) -->
+                                    <line x1="115" y1="135" x2="115" y2="75" stroke="#b07b2a" stroke-width="4" stroke-linecap="round"/>
+                                    <!-- Flag (Brass) -->
+                                    <polygon points="115,75 115,105 150,90" fill="#b07b2a"/>
+                                </svg>
+                            </div>
+                            <!-- Number Badge -->
+                            <div class="absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-brass rounded-full flex items-center justify-center shadow-lg border-2 border-sbg">
+                                <span class="text-white text-xl md:text-2xl font-bold">2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Connector Line -->
+                <div class="hidden md:block connector-line"></div>
+            </div>
+
+            <!-- Core Values Section (Illustration Left, Text Right) -->
+            <div class="relative">
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="relative flex justify-center">
+                        <!-- Circular Illustration for Core Values -->
+                        <div class="relative w-48 h-48 md:w-56 md:h-56">
+                            <div class="w-full h-full rounded-full illustration-circle flex items-center justify-center relative">
+                                <!-- SVG Illustration: Two People (Collaboration) -->
+                                <svg viewBox="0 0 200 200" class="w-full h-full">
+                                    <!-- Dark Platform/Ground -->
+                                    <rect x="50" y="175" width="100" height="12" fill="rgba(12,12,15,0.8)" rx="2"/>
+                                    <!-- Person 1 (Left - White) -->
+                                    <circle cx="75" cy="140" r="18" fill="rgba(255,255,255,0.95)"/>
+                                    <rect x="65" y="140" width="20" height="38" fill="rgba(255,255,255,0.95)" rx="3"/>
+                                    <rect x="63" y="145" width="24" height="22" fill="rgba(255,255,255,0.95)" rx="3"/>
+                                    <!-- Person 2 (Right - White) -->
+                                    <circle cx="125" cy="140" r="18" fill="rgba(255,255,255,0.95)"/>
+                                    <rect x="115" y="140" width="20" height="38" fill="rgba(255,255,255,0.95)" rx="3"/>
+                                    <rect x="113" y="145" width="24" height="22" fill="rgba(255,255,255,0.95)" rx="3"/>
+                                    <!-- Connection/Partnership Symbol -->
+                                    <circle cx="100" cy="155" r="8" fill="rgba(255,255,255,0.95)"/>
+                                </svg>
+                            </div>
+                            <!-- Number Badge -->
+                            <div class="absolute -right-2 md:-right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-brass rounded-full flex items-center justify-center shadow-lg border-2 border-sbg">
+                                <span class="text-white text-xl md:text-2xl font-bold">3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="text-xl font-heading mb-4 text-white">Core Values</h3>
+                        <p class="text-neutralGray leading-relaxed">
+                            We believe that accountability to each other and to our clients is paramount for success. We support and respect our team members in order to promote a positive environment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="px-6 md:px-12 py-16">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-heading mb-12 text-center">Why Choose Sahara Brass Industries</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card-glass p-6 rounded-2xl text-center">
+                    <div class="text-5xl mb-4 text-brass">1</div>
+                    <h4 class="font-heading text-xl mb-3">Premium Quality</h4>
+                    <p class="text-neutralGray text-sm">
+                        Rigorous quality control ensures every product meets international standards.
+                    </p>
+                </div>
+                <div class="card-glass p-6 rounded-2xl text-center">
+                    <div class="text-5xl mb-4 text-brass">2</div>
+                    <h4 class="font-heading text-xl mb-3">Custom Solutions</h4>
+                    <p class="text-neutralGray text-sm">
+                        From prototypes to production runs, we bring your unique designs to life.
+                    </p>
+                </div>
+                <div class="card-glass p-6 rounded-2xl text-center">
+                    <div class="text-5xl mb-4 text-brass">3</div>
+                    <h4 class="font-heading text-xl mb-3">Skilled Craftsmanship</h4>
+                    <p class="text-neutralGray text-sm">
+                        Over 150 experienced artisans with decades of brassworking expertise.
+                    </p>
+                </div>
+                <div class="card-glass p-6 rounded-2xl text-center">
+                    <div class="text-5xl mb-4 text-brass">4</div>
+                    <h4 class="font-heading text-xl mb-3">Sustainable Practices</h4>
+                    <p class="text-neutralGray text-sm">
+                        Using recycled materials and eco-friendly processes in all our operations.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-16 grid md:grid-cols-3 gap-8">
+                <div class="card-glass p-6 rounded-2xl">
+                    <h4 class="font-heading text-xl mb-3">Heritage & Innovation</h4>
+                    <p class="text-neutralGray">
+                        We honor traditional brassworking techniques while integrating modern manufacturing technologies for precision and consistency.
+                    </p>
+                </div>
+                <div class="card-glass p-6 rounded-2xl">
+                    <h4 class="font-heading text-xl mb-3">Global Reach</h4>
+                    <p class="text-neutralGray">
+                        Serving clients across continents with reliable delivery and exceptional customer support.
+                    </p>
+                </div>
+                <div class="card-glass p-6 rounded-2xl">
+                    <h4 class="font-heading text-xl mb-3">Long-term Partnership</h4>
+                    <p class="text-neutralGray">
+                        We build lasting relationships through transparency, reliability, and commitment to excellence.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ORIGINAL FEATURES SECTION -->
+    <section class="px-6 md:px-12 py-16">
+        <div class="max-w-7xl mx-auto">
+            <h3 class="text-3xl font-heading mb-12 text-center">What Sets Us Apart</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card-glass p-5 rounded-2xl">
+                    <h4 class="font-heading text-lg mb-2">Craftsmanship</h4>
+                    <p class="text-sm text-neutralGray">Each piece is hand-finished by skilled artisans with decades of experience.</p>
+                </div>
+                <div class="card-glass p-5 rounded-2xl">
+                    <h4 class="font-heading text-lg mb-2">Sustainability</h4>
+                    <p class="text-sm text-neutralGray">We use recycled brass and eco-friendly manufacturing processes.</p>
+                </div>
+                <div class="card-glass p-5 rounded-2xl">
+                    <h4 class="font-heading text-lg mb-2">Custom Solutions</h4>
+                    <p class="text-sm text-neutralGray">From prototypes to production runs, we bring your designs to life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript: animations + interactions -->
+    <script>
+        // GSAP initialisations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Load navbar and footer
+        async function loadHTML(elementId, file) {
+            try {
+                const response = await fetch(file);
+                const html = await response.text();
+                document.getElementById(elementId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading ${file}:`, error);
+            }
+        }
+
+        // Load navbar and footer on page load
+        loadHTML('navbar-container', 'menubar.html');
+        loadHTML('footer-container', 'footer.html');
+    </script>
+</body>
+
+</html>

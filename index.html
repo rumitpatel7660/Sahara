@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sahara Brass Industries — Showcase</title>
+
+    <!-- Google Fonts (heading + body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind custom config via CDN
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sbg: '#0c0c0f',
+                        brass: '#b07b2a',
+                        brassLite: '#ffd98a',
+                        neutralGray: '#66676b'
+                    },
+                    fontFamily: {
+                        heading: ['"Playfair Display"', 'serif'],
+                        body: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Three.js (placeholder for advanced hero effect) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(180deg, #070708 0%, #0c0c0f 100%);
+            color: #f5f5f5;
+            font-family: Inter, sans-serif;
+        }
+        
+        .metal-gradient {
+            background: linear-gradient(135deg, rgba(176, 123, 42, 0.14), rgba(255, 217, 138, 0.06));
+            border: 1px solid rgba(255, 217, 138, 0.06);
+            backdrop-filter: blur(6px);
+        }
+        /* directional shine overlay */
+        
+        .shine {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.28) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-120%) skewX(-10deg);
+            mix-blend-mode: overlay;
+        }
+        
+        .card-glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 14px;
+            box-shadow: 0 6px 30px rgba(2, 2, 2, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.035);
+        }
+        
+        .hero-image {
+            min-height: 500px;
+            background: linear-gradient(rgba(12, 12, 15, 0.6), rgba(12, 12, 15, 0.5)), url('static/hero.png') center/cover no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+        }
+        
+        @media (min-width: 1024px) {
+            .hero-image {
+                min-height: 700px;
+            }
+        }
+        
+        @media (min-width: 1440px) {
+            .hero-image {
+                min-height: 800px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-image {
+                min-height: 600px;
+            }
+        }
+        
+        .logo-circle-hero {
+            width: 80px;
+            height: 80px;
+            border: 2px solid rgba(176, 123, 42, 0.4);
+            border-radius: 50%;
+            position: relative;
+            background: linear-gradient(135deg, rgba(176, 123, 42, 0.2), rgba(255, 217, 138, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 20px rgba(176, 123, 42, 0.2);
+        }
+        
+        .logo-img-hero {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+            border-radius: 50%;
+        }
+        
+        .logo-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: rgba(176, 123, 42, 0.8);
+            letter-spacing: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-circle-hero {
+                width: 60px;
+                height: 60px;
+            }
+            .logo-fallback {
+                font-size: 1.2rem;
+            }
+        }
+        
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(176, 123, 42, 0.15);
+        }
+        
+        .why-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(176, 123, 42, 0.15);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- NAV -->
+    <div id="navbar-container"></div>
+
+    <!-- HERO -->
+    <section class="hero-image relative overflow-hidden px-6 md:px-12">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="grid md:grid-cols-2 gap-10 items-center py-12 lg:py-20">
+                <div class="space-y-6 relative z-10">
+                    <div class="text-neutralGray uppercase text-sm">Industrial • Premium</div>
+                    <div class="flex items-center gap-4 mb-3 flex-wrap">
+                        <!-- Logo -->
+                        <div class="logo-circle-hero flex-shrink-0">
+                            <img src="static/logo.png" alt="Sahara Brass Industries Logo" class="logo-img-hero" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="logo-fallback" style="display: none;">
+                                <span>SB</span>
+                            </div>
+                        </div>
+                        <h1 class="text-4xl md:text-6xl font-heading leading-tight text-white flex-1 min-w-[200px]">
+                            Sahara Brass Industries
+                        </h1>
+                    </div>
+                    <div class="text-brass text-2xl md:text-3xl font-heading">Crafted | Durable | Timeless</div>
+                    <p class="text-white max-w-xl text-base md:text-lg">
+                        We design and produce premium brass hardware for residential and commercial applications — engineered for longevity, finished for elegance.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button id="ctaPrimary" class="px-6 py-3 rounded-lg font-semibold bg-brass text-black shadow-md hover:bg-brassLite transition-colors">Request Inquiry</button>
+                        <a href="products.html" class="px-6 py-3 rounded-lg text-sm border border-neutralGray flex items-center justify-center gap-2 hover:border-brass transition-colors">View Products</a>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-4 text-sm text-white mt-6">
+                        <div>Made in India · Factory: Gujarat</div>
+                        <div class="hidden sm:block">·</div>
+                        <div>ISO 9001 (optional)</div>
+                    </div>
+                </div>
+
+                <div class="relative hidden md:block">
+                    <!-- hero product mock / replace with elegant photography -->
+                    <div id="heroMock" class="card-glass p-6 rounded-2xl relative overflow-hidden backdrop-blur-sm">
+                        <div class="absolute -inset-6 transform rotate-6 opacity-10">
+                            <!-- subtle background brass graphic (replace with svg) -->
+                        </div>
+
+                        <div class="relative z-10 flex gap-6 items-center">
+                            <div class="w-44 h-44 rounded-xl bg-[url('https://images.unsplash.com/photo-1600180758890-6b0b0d1840a2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=7955098bb0b8b1d6a8b8ef3b2a2a85f1')] bg-cover bg-center shadow-xl"></div>
+                            <div class="space-y-1">
+                                <div class="text-xl font-semibold text-white">Signature Door Handle</div>
+                                <div class="text-sm text-white">Solid brass · Satin finish · SKU: SB-214</div>
+                                <div class="mt-3">
+                                    <button class="px-4 py-2 rounded-md bg-transparent border border-brass text-brass hover:bg-brass hover:text-black transition-colors">Enquire about this</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shine overlay -->
+                        <div class="shine" id="heroShine"></div>
+                    </div>
+
+                    <!-- hero decorative blob -->
+                    <svg class="absolute -right-20 -bottom-20 opacity-10" width="420" height="420" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g opacity="0.12">
+                            <path d="M100 0 C140 40 260 40 300 0 C340 -40 400 40 360 80 C320 120 220 120 180 160 C140 200 40 200 0 160 C-40 120 60 40 100 0Z" fill="#b07b2a"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED PRODUCT CATEGORIES -->
+    <section class="px-6 md:px-12 py-16 md:py-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 md:mb-16">
+                <div class="text-neutralGray uppercase text-sm mb-3 tracking-wider">Our Product Range</div>
+                <h2 class="text-3xl md:text-5xl font-heading text-white mb-4">Featured Categories</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-brass to-brassLite mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Category Card 1 -->
+                <div class="category-card card-glass p-6 rounded-2xl relative overflow-hidden group cursor-pointer transform transition-all duration-300">
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-xl metal-gradient flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-heading text-white mb-3">Door Hardware</h3>
+                        <p class="text-neutralGray text-sm mb-4 leading-relaxed">
+                            Premium brass door handles, knobs, hinges, and locks designed for residential and commercial applications.
+                        </p>
+                        <div class="flex items-center text-brass text-sm font-medium group-hover:translate-x-2 transition-transform duration-300">
+                            <span>Explore Collection</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-brass/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                <!-- Category Card 2 -->
+                <div class="category-card card-glass p-6 rounded-2xl relative overflow-hidden group cursor-pointer transform transition-all duration-300">
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-xl metal-gradient flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-heading text-white mb-3">Automotive Parts</h3>
+                        <p class="text-neutralGray text-sm mb-4 leading-relaxed">
+                            Precision-engineered brass components for automotive applications with superior durability and performance.
+                        </p>
+                        <div class="flex items-center text-brass text-sm font-medium group-hover:translate-x-2 transition-transform duration-300">
+                            <span>Explore Collection</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-brass/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                <!-- Category Card 3 -->
+                <div class="category-card card-glass p-6 rounded-2xl relative overflow-hidden group cursor-pointer transform transition-all duration-300">
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-xl metal-gradient flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-heading text-white mb-3">Cable Lugs</h3>
+                        <p class="text-neutralGray text-sm mb-4 leading-relaxed">
+                            High-quality brass cable lugs and electrical connectors meeting international standards for industrial use.
+                        </p>
+                        <div class="flex items-center text-brass text-sm font-medium group-hover:translate-x-2 transition-transform duration-300">
+                            <span>Explore Collection</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-brass/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK OVERVIEW SECTION -->
+    <section class="px-6 md:px-12 py-16 md:py-24 bg-gradient-to-b from-transparent via-brass/5 to-transparent">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="card-glass p-8 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brass/10 rounded-full blur-3xl"></div>
+                        <div class="relative z-10">
+                            <div class="text-brass text-sm uppercase tracking-wider mb-4">About Sahara Brass</div>
+                            <h2 class="text-3xl md:text-4xl font-heading text-white mb-6">25+ Years of Excellence</h2>
+                            <p class="text-neutralGray mb-6 leading-relaxed">
+                                Since 1999, Sahara Brass Industries has been at the forefront of brass manufacturing in India. Under the visionary leadership of <span class="text-brass font-semibold">Mr. Ramesh kotadiya</span>, we combine traditional
+                                craftsmanship with modern technology to deliver products that exceed international standards.
+                            </p>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-2 h-2 rounded-full bg-brass mt-2 flex-shrink-0"></div>
+                                    <div>
+                                        <div class="text-white font-semibold mb-1">Manufacturing Excellence</div>
+                                        <div class="text-neutralGray text-sm">State-of-the-art facility in Gujarat with 150+ skilled artisans</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-2 h-2 rounded-full bg-brass mt-2 flex-shrink-0"></div>
+                                    <div>
+                                        <div class="text-white font-semibold mb-1">Global Reach</div>
+                                        <div class="text-neutralGray text-sm">Serving clients across continents with reliable delivery and support</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-2 h-2 rounded-full bg-brass mt-2 flex-shrink-0"></div>
+                                    <div>
+                                        <div class="text-white font-semibold mb-1">Quality First</div>
+                                        <div class="text-neutralGray text-sm">Rigorous quality control ensuring every product meets international standards</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="card-glass p-8 rounded-2xl">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="text-center">
+                                <div class="text-4xl md:text-5xl font-heading text-brass mb-2">25+</div>
+                                <div class="text-neutralGray text-sm uppercase tracking-wide">Years Experience</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl md:text-5xl font-heading text-brass mb-2">100+</div>
+                                <div class="text-neutralGray text-sm uppercase tracking-wide">Skilled Workers</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl md:text-5xl font-heading text-brass mb-2">300+</div>
+                                <div class="text-neutralGray text-sm uppercase tracking-wide">Products</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl md:text-5xl font-heading text-brass mb-2">10+</div>
+                                <div class="text-neutralGray text-sm uppercase tracking-wide">Countries Served</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <a href="products.html" class="block w-full px-6 py-4 rounded-lg font-semibold bg-brass text-black shadow-md hover:bg-brassLite transition-colors text-center">
+                            View All Products
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="px-6 md:px-12 py-16 md:py-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 md:mb-16">
+                <div class="text-neutralGray uppercase text-sm mb-3 tracking-wider">Our Advantages</div>
+                <h2 class="text-3xl md:text-5xl font-heading text-white mb-4">Why Choose Us</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-brass to-brassLite mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Why Choose Card 1 -->
+                <div class="why-card card-glass p-8 rounded-2xl text-center relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-brass/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-full metal-gradient flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-10 h-10 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-heading text-white mb-4">Premium Quality</h3>
+                        <p class="text-neutralGray leading-relaxed">
+                            Every product undergoes rigorous quality control and testing to ensure it meets the highest international standards for durability and performance.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Why Choose Card 2 -->
+                <div class="why-card card-glass p-8 rounded-2xl text-center relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-brass/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-full metal-gradient flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-10 h-10 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-heading text-white mb-4">Custom Solutions</h3>
+                        <p class="text-neutralGray leading-relaxed">
+                            From prototypes to large production runs, we work closely with clients to bring their unique designs and specifications to life with precision.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Why Choose Card 3 -->
+                <div class="why-card card-glass p-8 rounded-2xl text-center relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-brass/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-full metal-gradient flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-10 h-10 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-heading text-white mb-4">Expert Craftsmanship</h3>
+                        <p class="text-neutralGray leading-relaxed">
+                            Our skilled artisans combine traditional brassworking techniques with modern manufacturing processes to create exceptional products.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript: animations + interactions -->
+    <script>
+        // GSAP initialisations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero shine sweep animation (on enter)
+        const heroShine = document.getElementById('heroShine');
+        gsap.to(heroShine, {
+            x: '220%',
+            duration: 1.5,
+            ease: 'power2.out',
+            repeat: 0,
+            scrollTrigger: {
+                trigger: heroShine,
+                start: 'top 80%',
+            }
+        });
+
+        // Featured Categories Animation
+        const categoryCards = document.querySelectorAll('.category-card');
+        categoryCards.forEach((card, index) => {
+            gsap.from(card, {
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: index * 0.15,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
+            // Make category cards clickable
+            card.addEventListener('click', () => {
+                window.location.href = 'products.html';
+            });
+        });
+
+        // Why Choose Us Cards Animation
+        const whyCards = document.querySelectorAll('.why-card');
+        whyCards.forEach((card, index) => {
+            gsap.from(card, {
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: index * 0.15,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+
+        // Quick Overview Section Animation
+        const overviewSection = document.querySelector('.bg-gradient-to-b');
+        if (overviewSection) {
+            const overviewCards = overviewSection.querySelectorAll('.card-glass');
+            overviewCards.forEach((card, index) => {
+                gsap.from(card, {
+                    x: index === 0 ? -50 : 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+        }
+
+        // Load navbar and footer
+        async function loadHTML(elementId, file) {
+            try {
+                const response = await fetch(file);
+                const html = await response.text();
+                document.getElementById(elementId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading ${file}:`, error);
+            }
+        }
+
+        // Load navbar and footer on page load
+        loadHTML('navbar-container', 'menubar.html');
+        loadHTML('footer-container', 'footer.html');
+
+        // Optional: initialize Three.js hero effect (placeholder skeleton)
+        (function initThreeHero() {
+            // Keep this small — only enable if you plan to build a particle/shatter/mesh effect.
+            // This placeholder shows how to create a minimal canvas. Replace with your Three.js implementation.
+            try {
+                const container = document.getElementById('heroMock');
+                const w = container.clientWidth,
+                    h = container.clientHeight;
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({
+                    alpha: true,
+                    antialias: true
+                });
+                renderer.setSize(w, h);
+                renderer.setPixelRatio(window.devicePixelRatio);
+                const canvasEl = renderer.domElement;
+                canvasEl.style.position = 'absolute';
+                canvasEl.style.top = 0;
+                canvasEl.style.left = 0;
+                canvasEl.style.pointerEvents = 'none';
+                container.appendChild(canvasEl);
+                camera.position.z = 10;
+                const geom = new THREE.IcosahedronGeometry(3, 0);
+                const mat = new THREE.MeshBasicMaterial({
+                    color: 0xB07B2A,
+                    transparent: true,
+                    opacity: 0.03
+                });
+                const mesh = new THREE.Mesh(geom, mat);
+                scene.add(mesh);
+
+                function animate() {
+                    mesh.rotation.y += 0.002;
+                    renderer.render(scene, camera);
+                    requestAnimationFrame(animate);
+                }
+                animate();
+                // resize observer (basic)
+                new ResizeObserver(() => {
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                }).observe(container);
+            } catch (err) {
+                // fail silently
+            }
+        })();
+    </script>
+</body>
+
+</html>
